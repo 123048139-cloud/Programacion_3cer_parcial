@@ -10,6 +10,8 @@ import {
   Alert,
 } from "react-native";
 
+const API_URL = "http://192.168.1.78:5000/v1/usuarios";
+
 export default function App() {
   const [nombre, setNombre] = useState("");
   const [edad, setEdad] = useState("");
@@ -24,19 +26,28 @@ export default function App() {
   };
 
   const guardarUsuario = async () => {
-    if (nombre.trim() === "" || edad.trim() === "") {
+    const nombreLimpio = nombre.trim();
+    const edadLimpia = edad.trim();
+
+    if (nombreLimpio === "" || edadLimpia === "") {
       mostrarMensaje("Vacíos", "Completa el formulario");
+      return;
+    }
+
+    const edadNumerica = Number(edadLimpia);
+    if (Number.isNaN(edadNumerica)) {
+      mostrarMensaje("Dato inválido", "La edad debe ser un número");
       return;
     }
 
     try {
       setCargando(true);
-      const respuesta = await fetch("http://localhost:5000/v1/usuarios", {
+      const respuesta = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          nombre: nombre.trim(),
-          edad: Number(edad),
+          nombre: nombreLimpio,
+          edad: edadNumerica,
         }),
       });
 
@@ -44,7 +55,9 @@ export default function App() {
         throw new Error(`Error del servidor: ${respuesta.status}`);
       }
 
-      await respuesta.json();
+      const datos = await respuesta.json();
+      console.log("Respuesta API:", datos);
+
       mostrarMensaje("Éxito", "Usuario agregado correctamente");
       setNombre("");
       setEdad("");
@@ -66,6 +79,7 @@ export default function App() {
           placeholder="Nombre del usuario"
           value={nombre}
           onChangeText={setNombre}
+          editable={!cargando}
         />
 
         <TextInput
@@ -74,6 +88,7 @@ export default function App() {
           keyboardType="numeric"
           value={edad}
           onChangeText={setEdad}
+          editable={!cargando}
         />
 
         <Pressable

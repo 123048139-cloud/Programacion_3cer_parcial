@@ -6,7 +6,7 @@ export default function ConsultaUsuariosScreen() {
 
   const obtenerUsuarios = async () => {
     try {
-      const respuesta = await fetch("http://localhost:5000/v1/usuarios");
+      const respuesta = await fetch("http://192.168.1.78:5000/v1/usuarios");
       const datos = await respuesta.json();
       console.log("Respuesta API: ", datos);
       setUsuario(datos.usuarios);
