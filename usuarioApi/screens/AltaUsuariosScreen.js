@@ -10,7 +10,7 @@ import {
   Alert,
 } from "react-native";
 
-const API_URL = "http://192.168.1.78:5000/v1/usuarios";
+const API_URL = "http://10.16.72.177:5000/v1/usuarios";
 
 export default function App() {
   const [nombre, setNombre] = useState("");
