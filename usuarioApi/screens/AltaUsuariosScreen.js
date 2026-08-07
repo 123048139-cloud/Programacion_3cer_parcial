@@ -10,8 +10,7 @@ import {
   Alert,
 } from "react-native";
 
-const API_URL = "http://10.16.72.177:5000/v1/usuarios";
-
+import { API_URL } from "../utils/config";
 export default function App() {
   const [nombre, setNombre] = useState("");
   const [edad, setEdad] = useState("");
@@ -42,7 +41,7 @@ export default function App() {
 
     try {
       setCargando(true);
-      const respuesta = await fetch(API_URL, {
+      const respuesta = await fetch(`${API_URL}/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -52,7 +51,8 @@ export default function App() {
       });
 
       if (!respuesta.ok) {
-        throw new Error(`Error del servidor: ${respuesta.status}`);
+        const textoError = await respuesta.text();
+        throw new Error(`Status ${respuesta.status}: ${textoError}`);
       }
 
       const datos = await respuesta.json();
@@ -62,7 +62,7 @@ export default function App() {
       setNombre("");
       setEdad("");
     } catch (error) {
-      mostrarMensaje("Error", "No se pudo guardar el usuario");
+      mostrarMensaje("Error detallado", error.message || String(error));
       console.log("Error API:", error);
     } finally {
       setCargando(false);

@@ -12,8 +12,7 @@ import {
 import { useRouter } from "expo-router";
 import { getAuthHeader } from "../utils/auth";
 
-const API_URL = "http://10.16.72.177:5000/v1/usuarios";
-
+import { API_URL } from "../utils/config";
 export default function ActualizarUsuarioScreen({ id }) {
   const router = useRouter();
   const [nombre, setNombre] = useState("");

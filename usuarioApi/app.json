@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "repa2",
-    "slug": "repa2",
+    "slug": "arturoaaron",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/splash-icon.png",
@@ -20,13 +20,30 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.arturoyaaron.usuarioapi"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router"
-    ]
+      "expo-router",
+      "expo-font",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "34b24dde-e50d-44db-8e31-b11f249def20"
+      }
+    },
+    "owner": "arturoyaarons-team"
   }
 }

@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
+import { API_URL } from "../utils/config";
 
 export default function ConsultaUsuariosScreen() {
   const [usuarios, setUsuario] = useState([]);
@@ -15,7 +16,7 @@ export default function ConsultaUsuariosScreen() {
 
   const obtenerUsuarios = async () => {
     try {
-      const respuesta = await fetch("http://10.16.72.177:5000/v1/usuarios");
+      const respuesta = await fetch(API_URL);
       const datos = await respuesta.json();
       console.log("Respuesta API: ", datos);
       setUsuario(datos.usuarios);
